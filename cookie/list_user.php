@@ -1,7 +1,7 @@
 <?php 
 
 
-if(!isset($_GET['id'])){
+if(!isset($_COOKIE['id'])){
         //不是經由登入而來到此頁面的
         header("location:login_new.php");
         exit;
@@ -35,11 +35,10 @@ if(!isset($_GET['id'])){
 <?php 
 //取得資料
 include "dbconnect.php";
-$sql = "select * from `student` where `id` = '".$_GET['id']."'";
+$sql = "select * from `student` where `id` = '".$_COOKIE['id']."'";
 $user = $pdo ->query($sql)->fetch();
-if(!empty($user)){
-    echo "<h1>歡迎您回來！" . $user['name'] . "</h1>";
-}
+echo "<h1>歡迎您回來！" . $user['name'] . "</h1>";
+
 
 $sql = "select * from `student`";
 $rows = $pdo->query($sql)->fetchAll();
@@ -78,7 +77,7 @@ echo "<tr>";
 ?>
 </table>
 <div class="back">
-    <a href="login_new.php?status=1&id=<?=$_GET['id'];?>">回登入頁面</a>
+    <a href="login_new.php">回登入頁面</a>
 </div>
 </body>
 </html>

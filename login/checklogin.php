@@ -6,11 +6,12 @@ if(!empty($_POST['acc'])){
     // echo "有送出資料";
     $acc = $_POST["acc"];
     $pw = $_POST["pw"];
-    // $sql = "select * from `student` where `acc`='$acc' && `pw` = '$pw'";
+     $sql = "select * from `student` where `acc`='$acc' && `pw` = '$pw'";
     /*count(*)回傳有幾筆帳密一樣的資料，如果count不為0代表資料庫有資料,有資料=帳密符合 */
-    $sql = "select count(*) from `student` where `acc`='$acc' && `pw` = '$pw'";
+    //$sql = "select count(*) from `student` where `acc`='$acc' && `pw` = '$pw'";
     /*使用 fetchColumn() 只會返回一個指定的欄位值(由0開始計算位置) */
-    $user = $pdo->query($sql)->fetchColumn();
+    //$user = $pdo->query($sql)->fetchColumn();
+    $user = $pdo->query($sql)->fetch();
 
     /* 這邊不需要多做驗證判斷,因為去資料庫搜尋的時候已經驗證過帳密,$user才會有資料
        如果沒資料就代表帳密錯誤,而且如果登入失敗時,$user這邊資料庫回傳的會是空值,
@@ -22,8 +23,16 @@ if(!empty($_POST['acc'])){
     //     echo "帳號密碼錯誤，請重新輸入";
     // }
     
-    /* $user是空的=帳密錯誤,有資料=帳密正確 */
 
+/* 如果sql語法使用count(*),只會回傳有幾筆符合的,這時搜尋用fetchColumn()就可以直接拿到查詢的值
+    再加入判斷式 >0代表有拿到資料 ,
+    if($user > 0){
+        header("location:list_user.php?id=".$user['id']."");
+    } else{
+        header("location:login_new.php?status=0");
+    } */
+    /* $user是空的=帳密錯誤,有資料=帳密正確 */
+    
     if (!empty($user)){
         header("location:list_user.php?id=".$user['id']."");
     } else{
