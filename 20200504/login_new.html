@@ -1,46 +1,3 @@
-<?php 
-
-$dsn = "mysql:host=localhost;charset=utf8;dbname=school";
-$pdo = new PDO($dsn,"root","");
-date_default_timezone_set("Asia/Taipei");
-
-if(!empty($_POST['acc'])){
-    // echo "有送出資料";
-    $acc = $_POST["acc"];
-    $pw = $_POST["pw"];
-    // $sql = "select * from `student` where `acc`='$acc' && `pw` = '$pw'";
-    /*count(*)回傳有幾筆帳密一樣的資料，如果count不為0代表資料庫有資料,有資料=帳密符合 */
-    $sql = "select count(*) from `student` where `acc`='$acc' && `pw` = '$pw'";
-    /*使用 fetchColumn() 只會返回一個指定的欄位值(由0開始計算位置) */
-    $user = $pdo->query($sql)->fetchColumn();
-
-    /* 這邊不需要多做驗證判斷,因為去資料庫搜尋的時候已經驗證過帳密,$user才會有資料
-       如果沒資料就代表帳密錯誤,而且如果登入失敗時,$user這邊資料庫回傳的會是空值,
-       if判斷式就會報錯:Notice: Trying to access array offset on value of type bool 
-       使用下面方式就不會有這個報錯 */
-    // if($acc == $user['acc'] && $pw == $user['pw']){
-    //     echo "登入成功";
-    // }else{
-    //     echo "帳號密碼錯誤，請重新輸入";
-    // }
-    
-    /* $user是空的=帳密錯誤,有資料=帳密正確 */
-    if (!empty($user)){
-        echo "登入成功！";
-    }else{
-        echo "帳號密碼錯誤，請重新輸入";
-        echo $sql;
-    }
-
-
-}else{
-    // echo "請輸入帳號密碼";
-}
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +5,7 @@ if(!empty($_POST['acc'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
-    <!-- <style>
+    <style>
         *{
             margin: 0;
             padding: 0;
@@ -142,14 +99,11 @@ if(!empty($_POST['acc'])){
         .forget a:hover{
             color: rgb(0, 225, 255);
         }
-
-
-    </style> -->
+    </style>
 </head>
 <body>
-    
     <div class="login">
-        <form action="login.php" method="POST" class="form">
+        <form action="checklogin.php" method="POST" class="form">
             <h2>會員登入</h2>
             <div class="group">
                 <label for="acc">帳號</label>
@@ -169,9 +123,6 @@ if(!empty($_POST['acc'])){
                 <a href="#">忘記密碼?</a>
             </div>
         </form>
-
-
-
     </div>
 
 </body>
