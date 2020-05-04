@@ -26,7 +26,7 @@
             font-family: 'Noto Sans TC', sans-serif;
         }
         .form h2 {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border-bottom: 1px solid #fff;
             padding-bottom: 5px;
         }
@@ -99,12 +99,35 @@
         .forget a:hover{
             color: rgb(0, 225, 255);
         }
+        .status span{
+            color:red;
+            font-size: 12px;
+        }
+
     </style>
 </head>
 <body>
+
     <div class="login">
         <form action="checklogin.php" method="POST" class="form">
             <h2>會員登入</h2>
+            <div class="status">
+                <?php 
+                    if(isset($_GET['status'])){
+                        switch($_GET['status']){
+                            case "0":{
+                                echo "<span>帳號密碼錯誤，請重新輸入</span>";
+                            break;
+                            }
+                            case "1":{
+                                echo "get=".$_GET['id'];
+                                header("location:list_user.php?id=".$_GET['id']);
+                            break;
+                            }
+                        }
+                    }      
+                ?>
+            </div>
             <div class="group">
                 <label for="acc">帳號</label>
                 <input type="text" name="acc" id="acc">

@@ -25,9 +25,9 @@ if(!empty($_POST['acc'])){
     /* $user是空的=帳密錯誤,有資料=帳密正確 */
 
     if (!empty($user)){
-        echo "<script> {window.alert('登入成功');location.href='../20200429login/list_user.php'} </script>";
+        header("location:list_user.php?id=".$user['id']."");
     } else{
-        echo "<script> {window.alert('帳號密碼錯誤，請重新輸入');location.href='login_new.html'} </script>";
+        header("location:login_new.php?status=0");
     }
 }
 ?>

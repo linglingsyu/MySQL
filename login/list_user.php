@@ -1,3 +1,15 @@
+<?php 
+
+
+if(!isset($_GET['id'])){
+        //不是經由登入而來到此頁面的
+        header("location:login_new.php");
+        exit;
+}
+
+?> 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +34,10 @@
     
 <?php 
 //取得資料
-$dsn = "mysql:host=localhost;charset=utf8;dbname=school";
-$pdo = new PDO($dsn,"root","");
-date_default_timezone_set("Asia/Taipei");
+include "dbconnect.php";
+$sql = "select * from `student` where `id` = '".$_GET['id']."'";
+$user = $pdo ->query($sql)->fetch();
+echo "<h1>歡迎您回來！" . $user['name'] . "</h1>";
 
 $sql = "select * from `student`";
 $rows = $pdo->query($sql)->fetchAll();
@@ -43,7 +56,6 @@ $rows = $pdo->query($sql)->fetchAll();
         <td>註冊日期</td>
         <td>操作</td>
     </tr>
-
 <?php
 foreach($rows as $row){
 echo "<tr>"; 
@@ -63,7 +75,8 @@ echo "<tr>";
 }
 ?>
 </table>
-
-
+<div class="back">
+    <a href="login_new.php?status=1&id=<?=$_GET['id'];?>">回登入頁面</a>
+</div>
 </body>
 </html>
