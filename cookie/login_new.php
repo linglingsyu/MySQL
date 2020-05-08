@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,8 +157,11 @@
         <?php  
         }else{
             echo "您已登入";
+            echo "<div>"."<a href='logout.php'>登出</a>"."</div>";
+
         }
         ?>
         </div>
 </body>
 </html>
+
