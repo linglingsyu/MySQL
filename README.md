@@ -4,4 +4,5 @@
  2.使用者登入驗證 (使用cookie)
 # 5/8:
  1.cookie登出
- 2.SESSION
+ 2.SESSION登入登出
+ 
